@@ -9,6 +9,9 @@ export async function DELETE(
     request: Request,
     { params }: { params: IParams }
 ) {
+    if (!params?.listingId) {
+        return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
+    }
     const currentUser = await getCurrentUser();
 
     if (!currentUser) {
