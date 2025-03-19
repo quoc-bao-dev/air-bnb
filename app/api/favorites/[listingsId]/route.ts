@@ -7,6 +7,9 @@ interface IParams {
     listingsId?: string;
 }
 export async function POST(request: Request, { params }: { params: IParams }) {
+    if (!params?.listingsId) {
+        return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
+    }
     const currentUser = await getCurrentUser();
     if (!currentUser) {
         return NextResponse.error();
@@ -32,7 +35,13 @@ export async function POST(request: Request, { params }: { params: IParams }) {
     return NextResponse.json(user);
 }
 
-export async function DELETE(request: Request, { params }: { params: IParams }) {
+export async function DELETE(
+    request: Request,
+    { params }: { params: IParams }
+) {
+    if (!params?.listingsId) {
+        return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
+    }
     const currentUser = await getCurrentUser();
     if (!currentUser) {
         return NextResponse.error();
